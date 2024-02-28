@@ -41,7 +41,7 @@ class UserResponse(BaseModel):
     updated_at: Optional[datetime] = datetime.now()
 
 class UserLogin(BaseModel):
-    username: str
+    email: str
     password: str
 
 class UserFilter(BaseModel):

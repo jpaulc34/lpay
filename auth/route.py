@@ -15,11 +15,11 @@ auth_router = APIRouter(
 
 @auth_router.post("/login", response_model=Token)
 async def login_for_access_token(user: UserLogin):
-    user = UserAuth.authenticate_user(user.username, user.password)
+    user = UserAuth.authenticate_user(user.email, user.password)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect username or password",
+            detail="Incorrect email or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
     access_token_expires = timedelta(minutes=int(ACCESS_TOKEN_EXPIRE_MINUTES))

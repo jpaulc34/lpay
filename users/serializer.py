@@ -27,6 +27,7 @@ class User:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="user not found!")
     
     def filter(filter):
+        filter = {"username":"string"}
         clean_filter = {k: v for k, v in filter.items() if v is not None}
 
         users = DatabaseGateway(collection_name)
@@ -52,6 +53,7 @@ class User:
     
 
 def user_serializer(data) -> dict:
+
     user = {
         "id": str(data["_id"]),
         "username": data["username"],
@@ -63,6 +65,10 @@ def user_serializer(data) -> dict:
         "created_at": data["created_at"],
         "updated_at": data["updated_at"]
     }
+
+    if "password" in data:
+        user["password"] = data["password"]
+    
     return user
 
 def serialize_list(users) -> list:

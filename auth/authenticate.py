@@ -1,6 +1,7 @@
 from users.serializer import User
 from utils.passwords import PasswordHandler
 from auth.schema import TokenData
+from auth.exception import credentials_exception, user_status_exception
 from typing import Annotated
 
 from fastapi import Depends, HTTPException, status, Request
@@ -15,28 +16,16 @@ ACCESS_TOKEN_EXPIRE_MINUTES = config("token_expiry")
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
-credentials_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credentials",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
-
-user_status_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Account is on pending status! Please contact the administrator.",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
-
 class UserAuth:
     @staticmethod
-    def authenticate_user(username: str, password: str):
-        user = User.get_user_by_username(username)
-        password_handler = PasswordHandler()
+    def authenticate_user(email: str, password: str):
+        user = User.filter({"email":email})[0]
+        print(user)
         if not user:
             return False
-        if not password_handler.verify(password, user.password):
+        if not PasswordHandler.verify(password, str(user["password"])):
             return False
-        if user.status != "active":
+        if user["status"] != "active":
             raise user_status_exception
         return user
 
@@ -55,12 +44,11 @@ class UserAuth:
         try:
             payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
             user = {
-                "username": payload.get("sub"),
+                "email": payload.get("sub"),
                 "hsh": payload.get("hsh"),
                 "secret": payload.get("secret")
             }
-            password_handler = PasswordHandler()
-            if None in user.values() and not password_handler.verify(user["username"], user["hsh"]):
+            if None in user.values() and not PasswordHandler.verify(user["email"], user["hsh"]):
                 raise credentials_exception
             return TokenData(**user)
         except JWTError:
@@ -69,7 +57,7 @@ class UserAuth:
     async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
         token_data = await UserAuth.check_token(token)
         # print(dict(token_data))
-        user = User.get_user_by_username(username=token_data.username)
+        user = User.filter({"email":token_data.email})
         if user is None:
             raise credentials_exception
         return user
