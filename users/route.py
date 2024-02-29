@@ -1,11 +1,13 @@
 from fastapi import APIRouter, Depends
 from users.serializer import User
 from users.schema import UserUpdate, UserResponse, UserCreate, UserFilter
+from auth.authenticate import UserAuth
 
 
 user_router = APIRouter(
         prefix="/users",
-        tags= ["Users"]
+        tags= ["Users"],
+        dependencies= [Depends(UserAuth.validate_token)]
     )
 
 

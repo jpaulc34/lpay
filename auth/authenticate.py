@@ -43,12 +43,14 @@ class UserAuth:
         try:
             payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
             user = {
-                "email": payload.get("sub"),
-                "hsh": payload.get("hsh"),
-                "secret": payload.get("secret")
+                "email": str(payload.get("sub")),
+                "hsh": str(payload.get("hsh")),
+                "secret": str(payload.get("secret"))
             }
+            print(TokenData(**user))
             if None in user.values() and not PasswordHandler.verify(user["email"], user["hsh"]):
                 raise credentials_exception
+            
             return TokenData(**user)
         except JWTError:
             raise credentials_exception
