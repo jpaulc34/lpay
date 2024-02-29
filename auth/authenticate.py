@@ -47,10 +47,8 @@ class UserAuth:
                 "hsh": str(payload.get("hsh")),
                 "secret": str(payload.get("secret"))
             }
-            print(TokenData(**user))
             if None in user.values() and not PasswordHandler.verify(user["email"], user["hsh"]):
                 raise credentials_exception
-            
             return TokenData(**user)
         except JWTError:
             raise credentials_exception
