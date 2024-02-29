@@ -27,7 +27,6 @@ class User:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="user not found!")
     
     def filter(filter):
-        filter = {"username":"string"}
         clean_filter = {k: v for k, v in filter.items() if v is not None}
 
         users = DatabaseGateway(collection_name)

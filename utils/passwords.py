@@ -12,7 +12,7 @@ class PasswordHandler:
     
     def token_data(user):
         return {
-            "sub": user.username,
-            "hsh": PasswordHandler.hash(user.username),
-            "secret": user.password
+            "sub": user["email"],
+            "hsh": hash(user["email"]),
+            "secret": user["password"]
         }

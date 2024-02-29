@@ -20,7 +20,6 @@ class UserAuth:
     @staticmethod
     def authenticate_user(email: str, password: str):
         user = User.filter({"email":email})[0]
-        print(user)
         if not user:
             return False
         if not PasswordHandler.verify(password, str(user["password"])):
