@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 from users.serializer import User
-from users.schema import UserUpdate, UserResponse, UserCreate, UserFilter
+from users.schema import UserResponse, UserCreateUpdate, UserFilter
 from auth.authenticate import UserAuth
 
 
@@ -26,12 +26,12 @@ def get_user(id: str):
     return user
 
 @user_router.post("/", response_model=UserResponse)
-def save_user(user: UserCreate):
+def save_user(user: UserCreateUpdate):
     new_user = User(dict(user))
     return new_user.create()
 
 @user_router.put("/{id}", response_model=UserResponse)
-def update_user(id: str, updated_user: UserUpdate):
+def update_user(id: str, updated_user: UserCreateUpdate):
     user = User(updated_user)
     return user.update(id)
 

@@ -1,8 +1,9 @@
 from typing import Optional
-from pydantic import BaseModel, EmailStr, model_validator
+from pydantic import BaseModel, EmailStr, model_validator, Field
 from datetime import datetime
 
-class UserCreate(BaseModel):
+class User(BaseModel):
+    id: str
     username: str
     email: EmailStr
     password: str
@@ -13,32 +14,14 @@ class UserCreate(BaseModel):
     created_at: Optional[datetime] = datetime.now()
     updated_at: Optional[datetime] = datetime.now()
 
+class UserCreateUpdate(User):
     class Config:
+        exclude: {"id"}
         orm_mode: True
 
-class UserUpdate(BaseModel):
-    username: str
-    email: EmailStr
-    first_name: str
-    last_name: str
-    role: str
-    status: str
-    created_at: Optional[datetime] = datetime.now()
-    updated_at: Optional[datetime] = datetime.now()
-
+class UserResponse(User):
     class Config:
-        orm_mode: True
-
-class UserResponse(BaseModel):
-    id: str
-    username: str
-    email: EmailStr
-    first_name: str
-    last_name: str
-    role: str
-    status: str
-    created_at: Optional[datetime] = datetime.now()
-    updated_at: Optional[datetime] = datetime.now()
+        exclude: {"password"}
 
 class UserLogin(BaseModel):
     email: str

@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends
-from users.schema import UserCreate, UserResponse, UserLogin
+from users.schema import UserCreateUpdate, UserResponse, UserLogin
 from users.serializer import User
 from auth.authenticate import UserAuth, ACCESS_TOKEN_EXPIRE_MINUTES
 from auth.schema import Token
@@ -35,6 +35,6 @@ async def login_for_access_token(user: UserLogin):
 #     return current_user
 
 @auth_router.post("/create_account", response_model=UserResponse)
-def create_account(user: UserCreate):
+def create_account(user: UserCreateUpdate):
     new_user = User(dict(user))
     return new_user.create()
