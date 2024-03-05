@@ -24,7 +24,10 @@ class DatabaseGateway:
     
     def update_document(self, id, data:dict):
         document = Database.collection(self.collection_name)
-        return document.find_one_and_update({"_id": ObjectId(id)}, {"$set": dict(data)}, return_document=True)
+        vba = ObjectId.is_valid(id)
+        if vba:
+            return document.find_one_and_update({"_id": ObjectId(id)}, {"$set": dict(data)}, return_document=True)
+        raise HTTPException(status_code=404, detail="user not found!")
     
 
     def delete_document(self, id:str):    

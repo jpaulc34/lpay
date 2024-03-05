@@ -1,12 +1,15 @@
 from fastapi import APIRouter, Depends
 from users.schema import UserCreateUpdate, UserResponse, UserLogin
 from users.serializer import User
+from users.service import UserService
+from gateways.database import DatabaseGateway
 from auth.authenticate import UserAuth, ACCESS_TOKEN_EXPIRE_MINUTES
 from auth.schema import Token
-from fastapi import Depends, FastAPI, HTTPException, status
+from fastapi import Depends, HTTPException, status
 from typing import Any, Annotated
 from datetime import timedelta
 from utils.passwords import PasswordHandler
+from decouple import config
 
 router = APIRouter(
         prefix="/auth",
@@ -36,5 +39,5 @@ async def login_for_access_token(user: UserLogin):
 
 @router.post("/create_account", response_model=UserResponse)
 def create_account(user: UserCreateUpdate):
-    new_user = User(dict(user))
-    return new_user.create()
+    __user_service: UserService = User(DatabaseGateway(config("user_collection")))
+    return __user_service.create(user)

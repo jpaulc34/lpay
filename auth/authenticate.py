@@ -8,6 +8,8 @@ from fastapi import Depends, HTTPException, status, Request
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from datetime import datetime, timedelta
+from users.service import UserService
+from gateways.database import DatabaseGateway
 from decouple import config
 
 SECRET_KEY = config("secret")
@@ -16,10 +18,12 @@ ACCESS_TOKEN_EXPIRE_MINUTES = config("token_expiry")
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
+
 class UserAuth:
     @staticmethod
     def authenticate_user(email: str, password: str):
-        user = User.filter({"email":email})[0]
+        __user_service: UserService = User(DatabaseGateway(config("user_collection")))
+        user = __user_service.filter({"email":email})[0]
         if not user:
             return False
         if not PasswordHandler.verify(password, str(user["password"])):
@@ -55,8 +59,8 @@ class UserAuth:
         
     async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
         token_data = await UserAuth.check_token(token)
-        # print(dict(token_data))
-        user = User.filter({"email":token_data.email})
+        __user_service: UserService = User(DatabaseGateway(config("user_collection")))
+        user = __user_service.filter({"email":token_data.email})
         if user is None:
             raise credentials_exception
         return user
