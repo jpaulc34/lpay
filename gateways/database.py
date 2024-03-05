@@ -7,7 +7,7 @@ class DatabaseGateway:
         self.collection_name = collection_name
 
     def save_document(self, data):
-        document = Database.collection(self.collection_name).insert_one(dict(data))
+        document = Database.collection(self.collection_name).insert_one(data)
         data["_id"] = str(document.inserted_id)
         return data
 

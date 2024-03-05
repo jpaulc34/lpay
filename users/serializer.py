@@ -7,27 +7,27 @@ from utils.logging import create_log
 
 # logging.config.fileConfig('logging.conf', disable_existing_loggers=False)
 
-collection_name = "users"
-
 class User(UserService):
-    def __init__(self, db_gateway: DatabaseGateway, data= None) -> None:
-        self.db_gateway = db_gateway(collection_name)
-        self.data = data
+    def __init__(self, db_gateway: DatabaseGateway) -> None:
+        self.db_gateway = db_gateway
 
-    def create(self):
+    def create(self, data):
         password_handler = PasswordHandler()
-        self.data["password"] = password_handler.hash(self.data["password"])
-        create_log("create", self.data,)
-        return user_serializer(self.db_gateway.save_document(self.data))
+        data.password = password_handler.hash(data.password)
+        create_log("create", data)
+        return user_serializer(self.db_gateway.save_document(dict(data)))
 
     
-    def update(self, id):
-        del self.data.created_at
-        return user_serializer(self.db_gateway.update_document(id, self.data))
+    def update(self, id, data):
+        if hasattr(data, 'created_at'):
+            del data.created_at
+        create_log("update", dict(data))
+        return user_serializer(self.db_gateway.update_document(id, dict(data)))
     
     def delete(self, id):
         result = self.db_gateway.delete_document(id)
         if result:
+            create_log("delete", None, None, id)
             return user_serializer(result)
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="user not found!")
     
@@ -35,6 +35,7 @@ class User(UserService):
         clean_filter = {k: v for k, v in filter.items() if v is not None}
         serialized_users = serialize_list(self.db_gateway.filter_document(clean_filter))
         if serialized_users:
+            create_log("filter", None, {'parameters': filter})
             return serialized_users
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="data not found!")
 
@@ -48,6 +49,7 @@ class User(UserService):
     def get(self, id):
         result = self.db_gateway.get_document(id)
         if result:
+            create_log("get", None, None, id)
             return user_serializer(result)
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="user not found!")
     
