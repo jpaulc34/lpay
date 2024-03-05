@@ -8,12 +8,12 @@ from typing import Any, Annotated
 from datetime import timedelta
 from utils.passwords import PasswordHandler
 
-auth_router = APIRouter(
+router = APIRouter(
         prefix="/auth",
         tags= ["Authentication"],
     )
 
-@auth_router.post("/login", response_model=Token)
+@router.post("/login", response_model=Token)
 async def login_for_access_token(user: UserLogin):
     user = UserAuth.authenticate_user(user.email, user.password)
     if not user:
@@ -28,13 +28,13 @@ async def login_for_access_token(user: UserLogin):
     )
     return {"access_token": access_token, "token_type": "bearer"}
 
-# @auth_router.get("/me/", response_model=UserResponse)
+# @router.get("/me/", response_model=UserResponse)
 # async def read_users_me(
 #     current_user: Annotated[User, Depends(UserAuth.get_current_active_user)]
 # ):
 #     return current_user
 
-@auth_router.post("/create_account", response_model=UserResponse)
+@router.post("/create_account", response_model=UserResponse)
 def create_account(user: UserCreateUpdate):
     new_user = User(dict(user))
     return new_user.create()

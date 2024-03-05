@@ -1,12 +1,13 @@
 from fastapi import FastAPI
-from users.route import user_router
-from auth.route import auth_router
+from exceptions.exception_handler import ExceptionHandler
+from routers import routes
 
 app = FastAPI(
     title = "FMS",
     description= "FMS api helps you manage your finances. 🚀",
     version = "0.0.1"
 )
+ExceptionHandler.initiate_exception_handlers(app)
 
-app.include_router(router=auth_router)
-app.include_router(router=user_router)
+for router_module in routes:
+    app.include_router(router_module.router)
