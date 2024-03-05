@@ -6,8 +6,8 @@ client = MongoClient(config("db_client"))
 db = client.fms
 
 collections = {
-    "tithes" : db['tithes'],
-    "users": db['users']
+    config("tithe_collection"): config("tithe_collection"),
+    config("user_collection"): config("user_collection")
 }
 
 class Database:
