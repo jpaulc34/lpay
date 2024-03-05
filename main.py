@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from exceptions.exception_handler import ExceptionHandler
-from routers import routes
+from routes import routes
 
 app = FastAPI(
     title = "FMS",
