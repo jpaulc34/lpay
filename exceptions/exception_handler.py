@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 from fastapi.requests import Request
 
-from error_response_factory import ErrorResponseFactory
-from application_exception import ApplicationException
+from exceptions.error_response_factory import ErrorResponseFactory
+from exceptions.application_exception import ApplicationException
 
 
 class ExceptionHandler:
