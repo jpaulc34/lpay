@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 from users.schema import UserCreateUpdate, UserResponse, UserLogin
-from users.serializer import User
+from users.service_implementation import User
 from users.service import UserService
 from gateways.database import DatabaseGateway
 from auth.authenticate import UserAuth, ACCESS_TOKEN_EXPIRE_MINUTES

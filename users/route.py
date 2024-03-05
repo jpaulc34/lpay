@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends
-from users.serializer import User
+from users.service_implementation import User
 from users.schema import UserResponse, UserCreateUpdate, UserFilter
 from users.service import UserService
 from gateways.database import DatabaseGateway

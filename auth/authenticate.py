@@ -1,4 +1,4 @@
-from users.serializer import User
+from users.service_implementation import User
 from utils.passwords import PasswordHandler
 from auth.schema import TokenData
 from auth.exception import credentials_exception, user_status_exception
