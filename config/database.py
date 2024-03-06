@@ -1,5 +1,6 @@
 from pymongo import MongoClient
 from decouple import config
+from utils.logging import database_error
 
 client = MongoClient(config("db_client"))
 
@@ -13,6 +14,8 @@ collections = {
 class Database:
 
     def collection(collection: str):
-        if collection in collections:
-           print(collections[collection])
-           return collections[collection]
+        try:
+            if collection in collections:
+                return collections[collection]
+        except Exception as e:
+            database_error(e)

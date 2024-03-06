@@ -1,8 +1,16 @@
+from logging.config import dictConfig
 import logging
+from config.log import LogConfig
 
-__logger = logging.getLogger(__name__)
+dictConfig(LogConfig().model_dump())
+logger = logging.getLogger("FMS")
+# logger.info("Dummy Info")
+# logger.error("Dummy Error")
+# logger.debug("Dummy Debug")
+# logger.warning("Dummy Warning")
 
-def create_log(operation: str, data: dict= None, filter = None, id= None):
+def create_log_operation(operation: str, data: dict= None, filter = None, id= None):
+    # logger.debug("Dummy Debug")
     operations = {
         'create': data,
         'update': {'id': id, 'data': data},
@@ -11,5 +19,8 @@ def create_log(operation: str, data: dict= None, filter = None, id= None):
         'filter': filter,
         'get_all': None
     }
-    __logger.debug("Doing operation: " + operation +" -- " + str(operations[operation]))
-    print("Doing operation: " + operation +" -- " + str(operations[operation]))
+    logger.debug("Doing operation: " + operation +" -- " + str(operations[operation]))
+
+def database_error(message):
+    logger.error("Failed to connect to database: %s", message, exc_info=True)
+    exit(1)
