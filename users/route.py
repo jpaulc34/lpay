@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 from users.service_implementation import User
-from users.schema import UserResponse, UserCreateUpdate, UserFilter
+from users.schema import UserResponse, UserFilter, UserCreate, UserUpdate
 from users.service import UserService
 from gateways.database import DatabaseGateway
 from decouple import config
@@ -27,11 +27,11 @@ def get_user(id: str):
     return __user_service.get(id)
 
 @router.post("/", response_model=UserResponse)
-def save_user(user: UserCreateUpdate):
+def save_user(user: UserCreate):
     return __user_service.create(user)
 
 @router.put("/{id}", response_model=UserResponse)
-def update_user(id: str, updated_user: UserCreateUpdate):
+def update_user(id: str, updated_user: UserUpdate):
     return __user_service.update(id, updated_user)
 
 @router.delete("/{id}")

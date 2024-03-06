@@ -4,7 +4,9 @@ from utils.passwords import PasswordHandler
 from gateways.database import DatabaseGateway
 from users.service import UserService
 from utils.logging import create_log_operation
+from utils.timestamps import set_timestamps, set_updated_at
 from users.serializer import user_serializer, user_serialize_list
+from datetime import datetime
 
 # logging.config.fileConfig('logging.conf', disable_existing_loggers=False)
 
@@ -13,6 +15,7 @@ class User(UserService):
         self.db_gateway = db_gateway
 
     def create(self, data):
+        set_timestamps(data)
         password_handler = PasswordHandler()
         data.password = password_handler.hash(data.password)
         create_log_operation("create", data)
@@ -20,8 +23,7 @@ class User(UserService):
 
     
     def update(self, id, data):
-        if hasattr(data, 'created_at'):
-            del data.created_at
+        set_updated_at(data)
         create_log_operation("update", dict(data), None, id)
         return user_serializer(self.db_gateway.update_document(id, dict(data)))
     

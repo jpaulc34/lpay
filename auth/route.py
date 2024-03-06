@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends
-from users.schema import UserCreateUpdate, UserResponse, UserLogin
+from users.schema import UserResponse, UserLogin, UserCreate
 from users.service_implementation import User
 from users.service import UserService
 from gateways.database import DatabaseGateway
@@ -38,6 +38,6 @@ async def login_for_access_token(user: UserLogin):
 #     return current_user
 
 @router.post("/create_account", response_model=UserResponse)
-def create_account(user: UserCreateUpdate):
+def create_account(user: UserCreate):
     __user_service: UserService = User(DatabaseGateway(config("user_collection")))
     return __user_service.create(user)

@@ -2,7 +2,6 @@ def user_serializer(data) -> dict:
 
     user = {
         "id": str(data["_id"]),
-        "username": data["username"],
         "email": data["email"],
         "first_name": data["first_name"],
         "last_name": data["last_name"],
