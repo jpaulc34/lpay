@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 from users.service_implementation import User
-from users.schema import UserResponse, UserFilter, UserCreate, UserUpdate
+from users.schema import UserResponse, UserFilter, UserCreate, UserUpdate, UserListResponse
 from users.service import UserService
 from gateways.database import DatabaseGateway
 from decouple import config
@@ -14,11 +14,11 @@ router = APIRouter(
 
 __user_service: UserService = User(DatabaseGateway(config("user_collection")))
 
-@router.get("/",response_model=list[UserResponse])
+@router.get("/",response_model=list[UserListResponse])
 def get_users():
     return __user_service.get_all()
 
-@router.get("/filter", response_model=list[UserResponse])
+@router.get("/filter", response_model=list[UserListResponse])
 def filter_user(query: UserFilter = Depends()):
     return __user_service.filter(dict(query))
 

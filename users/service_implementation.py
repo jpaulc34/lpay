@@ -15,9 +15,9 @@ class User(UserService):
         self.db_gateway = db_gateway
 
     def create(self, data):
-        set_timestamps(data)
         password_handler = PasswordHandler()
         data.password = password_handler.hash(data.password)
+        set_timestamps(data)
         create_log_operation("create", data)
         return user_serializer(self.db_gateway.save_document(dict(data)))
 
