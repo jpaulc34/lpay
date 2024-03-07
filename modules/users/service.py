@@ -1,5 +1,5 @@
 from abc import ABC
-from users.schema import UserResponse
+from modules.users.schema import UserResponse
 
 class UserService(ABC):
     

@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends
-from users.schema import UserResponse, UserLogin, UserCreate
-from users.service_implementation import User
-from users.service import UserService
+from modules.users.schema import UserResponse, UserLogin, UserCreate
+from modules.users.service_implementation import User
+from modules.users.service import UserService
 from gateways.database import DatabaseGateway
-from auth.authenticate import UserAuth, ACCESS_TOKEN_EXPIRE_MINUTES
-from auth.schema import Token
+from modules.auth.authenticate import UserAuth, ACCESS_TOKEN_EXPIRE_MINUTES
+from modules.auth.schema import Token
 from fastapi import Depends, HTTPException, status
 from typing import Any, Annotated
 from datetime import timedelta

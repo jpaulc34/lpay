@@ -2,10 +2,10 @@ from fastapi import HTTPException, status
 
 from utils.passwords import PasswordHandler
 from gateways.database import DatabaseGateway
-from users.service import UserService
+from modules.users.service import UserService
 from utils.logging import create_log_operation
 from utils.timestamps import set_timestamps, set_updated_at
-from users.serializer import user_serializer, user_serialize_list
+from modules.users.serializer import user_serializer, user_serialize_list
 from datetime import datetime
 
 # logging.config.fileConfig('logging.conf', disable_existing_loggers=False)

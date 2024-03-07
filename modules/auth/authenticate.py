@@ -1,14 +1,14 @@
-from users.service_implementation import User
+from modules.users.service_implementation import User
 from utils.passwords import PasswordHandler
-from auth.schema import TokenData
-from auth.exception import credentials_exception, user_status_exception
+from modules.auth.schema import TokenData
+from modules.auth.exception import credentials_exception, user_status_exception
 from typing import Annotated
 
 from fastapi import Depends, HTTPException, status, Request
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from datetime import datetime, timedelta
-from users.service import UserService
+from modules.users.service import UserService
 from gateways.database import DatabaseGateway
 from decouple import config
 

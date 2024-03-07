@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
-from users.service_implementation import User
-from users.schema import UserResponse, UserFilter, UserCreate, UserUpdate, UserListResponse
-from users.service import UserService
+from modules.users.service_implementation import User
+from modules.users.schema import UserResponse, UserFilter, UserCreate, UserUpdate, UserListResponse
+from modules.users.service import UserService
 from gateways.database import DatabaseGateway
 from decouple import config
 
