@@ -2,13 +2,14 @@ from fastapi import APIRouter, Depends
 from modules.users.service_implementation import User
 from modules.users.schema import UserResponse, UserFilter, UserCreate, UserUpdate, UserListResponse
 from modules.users.service import UserService
+from modules.auth.authenticate import UserAuth
 from gateways.database import DatabaseGateway
 from decouple import config
 
 router = APIRouter(
         prefix="/users",
         tags= ["Users"],
-        # dependencies= [Depends(UserAuth.validate_token)]
+        dependencies= [Depends(UserAuth.validate_token)]
     )
 
 
@@ -34,6 +35,6 @@ def save_user(user: UserCreate):
 def update_user(id: str, updated_user: UserUpdate):
     return __user_service.update(id, updated_user)
 
-@router.delete("/{id}")
+@router.delete("/{id}",response_model=UserResponse)
 def delete_user(id: str):
     return __user_service.delete(id)
