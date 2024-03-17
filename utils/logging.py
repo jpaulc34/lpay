@@ -19,7 +19,7 @@ def create_log_operation(operation: str, data: dict= None, filter = None, id= No
         'filter': filter,
         'get_all': None
     }
-    logger.debug("Doing operation: " + operation +" -- " + str(operations[operation]))
+    logger.debug(operation.upper() +" -- " + str(operations[operation]))
 
 def database_error(message):
     logger.error("Failed to connect to database: %s", message, exc_info=True)
