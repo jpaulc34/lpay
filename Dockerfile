@@ -13,4 +13,4 @@ COPY ./ /code/lpay
 
 # Set the CMD to your handler (could also be done as a parameter override outside of the Dockerfile)
 # Since we copied 
-CMD ["uvicorn", "lpay.main:app", "--host", "0.0.0.0", "--port", "80"]
+CMD ["uvicorn", "lpay.main:app", "--host", "0.0.0.0", "--port", "8000"]
