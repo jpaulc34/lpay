@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from exceptions.exception_handler import ExceptionHandler
-from routes import routes
+from .exceptions.exception_handler import ExceptionHandler
+from .routes import routes
 import uvicorn, os
 from fastapi.middleware.cors import CORSMiddleware
 from mangum import Mangum
@@ -8,7 +8,7 @@ from mangum import Mangum
 root_path = os.getenv('ENV', default='')
 
 app = FastAPI(
-    root_path=f'/{root_path}',
+    # root_path=f'/{root_path}',
     title = "FMS",
     description= "FMS api helps you manage your finances. 🚀",
     version = "0.0.1"

@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends
-from modules.tithes.service_implementation import Tithe
-from modules.tithes.schema import TitheCreateUpdate, TitheResponse, TitheFilter
-from modules.tithes.service import TitheService
-from modules.auth.authenticate import UserAuth
-from gateways.database import DatabaseGateway
+from ...modules.tithes.service_implementation import Tithe
+from ...modules.tithes.schema import TitheCreateUpdate, TitheResponse, TitheFilter
+from ...modules.tithes.service import TitheService
+from ...modules.auth.authenticate import UserAuth
+from ...gateways.database import DatabaseGateway
 from decouple import config
 
 router = APIRouter(

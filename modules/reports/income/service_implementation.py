@@ -1,10 +1,10 @@
 from fastapi import HTTPException, status
 
-from gateways.database import DatabaseGateway
-from modules.reports.income.service import IncomeReportService
-from utils.logging import create_log_operation
-from utils.timestamps import set_timestamps, set_updated_at
-from modules.tithes.serializer import tithe_serializer, tithe_serialize_list
+from ....gateways.database import DatabaseGateway
+from ....modules.reports.income.service import IncomeReportService
+from ....utils.logging import create_log_operation
+from ....utils.timestamps import set_timestamps, set_updated_at
+from ....modules.tithes.serializer import tithe_serializer, tithe_serialize_list
 from datetime import datetime
 
 # logging.config.fileConfig('logging.conf', disable_existing_loggers=False)

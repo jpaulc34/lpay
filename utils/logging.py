@@ -1,6 +1,6 @@
 from logging.config import dictConfig
 import logging
-from config.log import LogConfig
+from ..config.log import LogConfig
 
 dictConfig(LogConfig().model_dump())
 logger = logging.getLogger("FMS")

@@ -4,7 +4,7 @@ from http import HTTPStatus
 
 from fastapi.responses import Response
 
-from exceptions.error_response import ErrorResponse
+from .error_response import ErrorResponse
 
 
 def get_datetime_now():

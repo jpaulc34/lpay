@@ -1,14 +1,14 @@
 from fastapi import APIRouter, Depends
-from modules.users.schema import UserResponse, UserLogin, UserCreate
-from modules.users.service_implementation import User
-from modules.users.service import UserService
-from gateways.database import DatabaseGateway
-from modules.auth.authenticate import UserAuth, ACCESS_TOKEN_EXPIRE_MINUTES
-from modules.auth.schema import Token
+from ...modules.users.schema import UserResponse, UserLogin, UserCreate
+from ...modules.users.service_implementation import User
+from ...modules.users.service import UserService
+from ...gateways.database import DatabaseGateway
+from ...modules.auth.authenticate import UserAuth, ACCESS_TOKEN_EXPIRE_MINUTES
+from ...modules.auth.schema import Token
 from fastapi import Depends, HTTPException, status
 from typing import Any, Annotated
 from datetime import timedelta
-from utils.passwords import PasswordHandler
+from ...utils.passwords import PasswordHandler
 from decouple import config
 
 router = APIRouter(

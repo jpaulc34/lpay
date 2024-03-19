@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends
-from modules.users.service_implementation import User
-from modules.users.schema import UserResponse, UserFilter, UserCreate, UserUpdate, UserListResponse
-from modules.users.service import UserService
-from modules.auth.authenticate import UserAuth
-from gateways.database import DatabaseGateway
+from ...modules.users.service_implementation import User
+from ...modules.users.schema import UserResponse, UserFilter, UserCreate, UserUpdate, UserListResponse
+from ...modules.users.service import UserService
+from ...modules.auth.authenticate import UserAuth
+from ...gateways.database import DatabaseGateway
 from decouple import config
 
 router = APIRouter(

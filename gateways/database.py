@@ -1,4 +1,4 @@
-from config.database import Database
+from ..config.database import Database
 from bson import ObjectId
 from fastapi import HTTPException
 

@@ -1,5 +1,5 @@
 from abc import ABC
-from modules.tithes.schema import TitheResponse
+from ...modules.tithes.schema import TitheResponse
 
 class TitheService(ABC):
     

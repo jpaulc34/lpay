@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 from decouple import config
-from utils.logging import database_error
+from ..utils.logging import database_error
 
 client = MongoClient(config("db_client"))
 

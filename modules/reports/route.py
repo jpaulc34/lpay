@@ -1,14 +1,14 @@
 from fastapi import APIRouter, Depends
-from modules.reports.income.service_implementation import IncomeReport
-from modules.reports.income.service import IncomeReportService
-from modules.auth.authenticate import UserAuth
-from gateways.database import DatabaseGateway
+from ...modules.reports.income.service_implementation import IncomeReport
+from ...modules.reports.income.service import IncomeReportService
+from ...modules.auth.authenticate import UserAuth
+from ...gateways.database import DatabaseGateway
 from decouple import config
 from datetime import datetime
 
 
 # quick debug
-from config.database import Database
+from ...config.database import Database
 from pydantic import BaseModel, EmailStr, model_validator, Field, validator, model_validator
 
 

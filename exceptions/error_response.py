@@ -1,4 +1,4 @@
-from dto.base_dto import BaseDto
+from ..dto.base_dto import BaseDto
 
 class ErrorResponse(BaseDto):
     timestamp: str
