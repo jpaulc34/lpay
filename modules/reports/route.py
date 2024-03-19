@@ -28,16 +28,17 @@ __report_service: IncomeReportService = IncomeReport(DatabaseGateway(config("rep
 def create_report(date: str):
     data = {'date':date}
     tithes_data = Database.collection(config("tithe_collection")).find(data)
-
+    
     # sixAm = sum([int(value['amount']) for value in tithes_data if value['service'] == '6am'])
     # nineAm = sum([int(value['amount']) for value in tithes_data if value['service'] == '9am'])
     sixAm = []
     nineAm = []
     for i in tithes_data:
         if i['service'] == '6am':
-            print('appended', i['service'], i['amount'])
+            sixAm.append(i['amount'])
         else:
-            print('appended', i['service'], i['amount'])
+            sixAm.append(i['amount'])
+           
     sum6 = sum(sixAm)
     sum9 = sum(nineAm)
     total = sum6+sum9
